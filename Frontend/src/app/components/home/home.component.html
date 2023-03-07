@@ -1,0 +1,76 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled">Disabled</a>
+          </li>
+        </ul>
+        <button class="btn btn-outline-danger" (click)="logout()">Çıkış Yap</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container d-flex justify-content-center">
+    <div class="col-md-8 mt-4">
+        <form #form="ngForm" (ngSubmit)="add(form)">
+            <div class="form-group">
+                <label for="name">Yapılacak İş?</label>
+                <input type="text" class="form-control" required minlength="3" ngModel name="name" id="name">
+            </div>
+            <div class="form-group mt-2">
+                <button class="btn btn-outline-primary w-100">Kaydet</button>
+            </div>
+        </form>
+        <hr>
+        <button class="btn btn-primary" (click)="getAll()">Yenile</button>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Tarih</th>
+                    <th>Yapılacak İş</th>
+                    <th>Durumu</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let todo of todos let index = index">
+                    <td>{{index + 1 }}</td>
+                    <td>{{todo.date | date: 'dd.MM.yyyy HH:mm:ss'}}</td>
+                    <td>{{todo.name}}</td>
+                    <td>
+                        <span [class]="changeClassByStatus(todo.isCompleted)">
+                            {{todo.isCompleted ? "Yapıldı" : "Yapılmadı"}}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-outline-info btn-sm" (click)="updateById(todo._id)">Durumu Değiştir</button>
+                        <button class="btn btn-outline-danger btn-sm mx-1" (click)="removeById(todo._id)">Sil</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+  </div>
